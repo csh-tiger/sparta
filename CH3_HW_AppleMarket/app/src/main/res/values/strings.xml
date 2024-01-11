@@ -1,0 +1,14 @@
+<resources>
+    <!--    <string name=""></string>-->
+    <string name="app_name">CH3_2 HW_AppleMarket</string>
+    <string name="toolbar_text">내배캠동</string>
+    <string name="list_name">list name</string>
+    <string name="list_address">list address</string>
+    <string name="list_price"> list price</string>
+    <string name="list_num">22</string>
+    <string name="price_unit">원</string>
+
+    <string name="manner_text"><u>매너온도</u></string>
+    <string name="manner_temp">39.3°C</string>
+    <string name="tochat">채팅하기</string>
+</resources>
