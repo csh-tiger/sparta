@@ -6,4 +6,5 @@
     <color name="darkgray">#FF505050</color>
     <color name="bluegreen">#FF04B486</color>
     <color name="deeporange">#FFFF4001</color>
+    <color name="transparency">#00FFFFFF</color>
 </resources>

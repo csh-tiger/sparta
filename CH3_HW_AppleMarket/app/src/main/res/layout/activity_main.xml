@@ -55,4 +55,42 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/floating_button"
+        android:backgroundTint="@color/white"
+        app:borderWidth="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/floating_button"
+        app:maxImageSize="56dp"
+        app:tint="@null"
+        android:visibility="invisible"
+        >
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:id="@+id/floating_butto"-->
+<!--        app:cardCornerRadius="30dp"-->
+<!--        android:elevation="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+
+<!--        >-->
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:src="@drawable/up_botton"-->
+<!--            android:layout_gravity="center|center"-->
+<!--            />-->
+<!--    </androidx.cardview.widget.CardView>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

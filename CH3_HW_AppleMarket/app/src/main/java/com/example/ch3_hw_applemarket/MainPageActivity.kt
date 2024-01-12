@@ -1,15 +1,24 @@
 package com.example.ch3_hw_applemarket
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ch3_hw_applemarket.databinding.ActivityMainBinding
 
 class MainPageActivity : AppCompatActivity() {
@@ -29,15 +38,16 @@ class MainPageActivity : AppCompatActivity() {
         dataList.add(MyItem(R.drawable.sample4, "금고", "해운대구 우제2동", "10000", "14", "17","금고\n떼서 가져가야함\n대우월드마크센텀\n미국이주관계로 싸게 팝니다",	"Nicole"))
         dataList.add(MyItem(R.drawable.sample5, "갤럭시Z플립3 팝니다", "연제구 연산제8동", "150000", "22", "9", "갤럭시 Z플립3 그린 팝니다\n항시 케이스 씌워서 썻고 필름 한장챙겨드립니다\n화면에 살짝 스크래치난거 말고 크게 이상은없습니다!",	"절명"))
         dataList.add(MyItem(R.drawable.sample6, "프라다 복조리백", "수원시 영통구 원천동", "50000", "25", "16", "까임 오염없고 상태 깨끗합니다\n정품여부모름",	"미니멀하게"))
-        dataList.add(MyItem(R.drawable.sample7, "울산 동해오션뷰 60평 복층 펜트하우스 1일 숙박권 펜션 힐링 숙소 별장", "남구 옥동", "150000", "142", "54", "울산 동해바다뷰 60평 복층 펜트하우스 1일 숙박권\\n(에어컨이 없기에 낮은 가격으로 변경했으며 8월 초 가장 더운날 다녀가신 분 경우 시원했다고 잘 지내다 가셨습니다)\\n1. 인원: 6명 기준입니다. 1인 10,000원 추가요금\\n2. 장소: 북구 블루마시티, 32-33층\\n3. 취사도구, 침구류, 세면도구, 드라이기 2개, 선풍기 4대 구비\\n4. 예약방법: 예약금 50,000원 하시면 저희는 명함을 드리며 입실 오전 잔금 입금하시면 저희는 동.호수를 알려드리며 고객님은 예약자분 신분증 앞면 주민번호 뒷자리 가리시거나 지우시고 문자로 보내주시면 저희는 카드키를 우편함에 놓아 둡니다.\\n5. 33층 옥상 야외 테라스 있음, 가스버너 있음\\n6. 고기 굽기 가능\\n7. 입실 오후 3시, 오전 11시 퇴실, 정리, 정돈 , 밸브 잠금 부탁드립니다.\\n8. 층간소음 주의 부탁드립니다.\\n9. 방3개, 화장실3개, 비데 3개\\n10. 저희 집안이 쓰는 별장입니다.", "굿리치"))
-        dataList.add(MyItem(R.drawable.sample8, "샤넬 탑핸들 가방", "동래구 온천제2동", "180000", "31", "7", "샤넬 트랜디 CC 탑핸들 스몰 램스킨 블랙 금장 플랩백 !\n + \"\\n\" + \"색상 : 블랙\\n\" + \"사이즈 : 25.5cm * 17.5cm * 8cm\\n\" + \"구성 : 본품더스트\\n\" + \"\\n\" + \"급하게 돈이 필요해서 팝니다 ㅠ ㅠ", "난쉽"))
-        dataList.add(MyItem(R.drawable.sample9, "4행정 엔진분무기 판매합니다.", "원주시 명륜2동", "30000", "7", "28", "3년전에 사서 한번 사용하고 그대로 둔 상태입니다. 요즘 사용은 안해봤습니다. 그래서 저렴하게 내 놓습니다. 중고라 반품은 어렵습니다.\\n", "알뜰한"))
+        dataList.add(MyItem(R.drawable.sample7, "울산 동해오션뷰 60평 복층 펜트하우스 1일 숙박권 펜션 힐링 숙소 별장", "남구 옥동", "150000", "142", "54", "울산 동해바다뷰 60평 복층 펜트하우스 1일 숙박권\n(에어컨이 없기에 낮은 가격으로 변경했으며 8월 초 가장 더운날 다녀가신 분 경우 시원했다고 잘 지내다 가셨습니다)\n1. 인원: 6명 기준입니다. 1인 10,000원 추가요금\n2. 장소: 북구 블루마시티, 32-33층\n3. 취사도구, 침구류, 세면도구, 드라이기 2개, 선풍기 4대 구비\n4. 예약방법: 예약금 50,000원 하시면 저희는 명함을 드리며 입실 오전 잔금 입금하시면 저희는 동.호수를 알려드리며 고객님은 예약자분 신분증 앞면 주민번호 뒷자리 가리시거나 지우시고 문자로 보내주시면 저희는 카드키를 우편함에 놓아 둡니다.\n5. 33층 옥상 야외 테라스 있음, 가스버너 있음\n6. 고기 굽기 가능\n7. 입실 오후 3시, 오전 11시 퇴실, 정리, 정돈 , 밸브 잠금 부탁드립니다.\n8. 층간소음 주의 부탁드립니다.\n9. 방3개, 화장실3개, 비데 3개\n10. 저희 집안이 쓰는 별장입니다.", "굿리치"))
+        dataList.add(MyItem(R.drawable.sample8, "샤넬 탑핸들 가방", "동래구 온천제2동", "180000", "31", "7", "샤넬 트랜디 CC 탑핸들 스몰 램스킨 블랙 금장 플랩백 !\n" + "\n" + "색상 : 블랙\n" + "사이즈 : 25.5cm * 17.5cm * 8cm\n" + "구성 : 본품더스트\n" + "\n" + "급하게 돈이 필요해서 팝니다 ㅠ ㅠ", "난쉽"))
+        dataList.add(MyItem(R.drawable.sample9, "4행정 엔진분무기 판매합니다.", "원주시 명륜2동", "30000", "7", "28", "3년전에 사서 한번 사용하고 그대로 둔 상태입니다. 요즘 사용은 안해봤습니다. 그래서 저렴하게 내 놓습니다. 중고라 반품은 어렵습니다.\n", "알뜰한"))
         dataList.add(MyItem(R.drawable.sample10, "셀린느 버킷 가방", "중구 동화동", "190000", "40", "6", "22년 신세계 대전 구매입니당\n" + "셀린느 버킷백\n" + "구매해서 몇번사용했어요\n" + "까짐 스크래치 없습니다.\n" + "타지역에서 보내는거라 택배로 진행합니당!",	"똑태현"))
 
         val adapter = MyAdapter(dataList)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
+        //item클릭시
         adapter.itemClick = object : MyAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainPageActivity, DetailPageActivity::class.java)
@@ -45,6 +55,38 @@ class MainPageActivity : AppCompatActivity() {
                 Log.d("MainActivity", "sample${position+1}=${dataList[position]}")
                 startActivity(intent)
             }
+        }
+
+        val fadeIn= AlphaAnimation(0f,1f).apply { duration=500 }    //플로팅버튼 애니메이션
+        val fadeOut=AlphaAnimation(1f,0f).apply { duration=500 }    //플로팅버튼 애니메이션
+        var isTop=true      //화면 최상단위치 여부확인
+
+        //리사이클러뷰 스크롤시 이벤트처리(플로팅버튼)
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState:Int){
+                super.onScrollStateChanged(recyclerView,newState)
+                if(!binding.recyclerView.canScrollVertically(-1) //위로(-1)스크롤할수없을때(!)(=최상단에 위치해있을때)
+                        && newState==RecyclerView.SCROLL_STATE_IDLE) {    //현재상태(newState)가 스크롤이 멈춘 상태(SCROLL_STATE_IDLE)일때
+                    binding.floatingButton.startAnimation(fadeOut)      //사라짐(fadeout) 효과적용
+                    binding.floatingButton.visibility=View.GONE     //플로팅버튼 사라짐
+                    isTop=true
+                }else{      //스크롤 위로 올릴 수 있을때(=최상단이 아닐때)나 스크롤이 움직이고 있을때
+                    if(isTop) {     //isTop이 true이면
+                        binding.floatingButton.visibility = View.VISIBLE    //플로팅 버튼 보여짐
+                        binding.floatingButton.startAnimation(fadeIn)
+                        isTop = false       //최상단이 아니므로 isTop을 false상태로 변경
+                    //페이지가 중간에 있을때는 맨위에서 스크롤을 내려 이미 false여서 플로팅버튼이 VISIBLE인 상태
+                    //-> false인 상태에서 스크롤 움직여봤자 onScrollStateChanged함수의 조건문은 실행되지 않음
+                    //->플로팅 버튼은 계속 보여지는 상태
+                    }
+                }
+
+            }
+        })
+
+        //플로팅버튼 클릭시
+        binding.floatingButton.setOnClickListener{
+            binding.recyclerView.smoothScrollToPosition(0)      //최상단(position:0)으로 이동(효과-smooth)
         }
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -71,5 +113,42 @@ class MainPageActivity : AppCompatActivity() {
         }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        binding.ivMainNotification.setOnClickListener {
+            val manager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val builder: NotificationCompat.Builder
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                val channelId="one-channel"
+                val channelName="My Channel One"
+                val channel = NotificationChannel(
+                    channelId,
+                    channelName,
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
+                    description = "My Channel One Description"
+                    setShowBadge(true)
+                    val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                    val audioAttributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
+                    setSound(uri, audioAttributes)
+                    enableVibration(true)
+                }
+                manager.createNotificationChannel(channel)
+
+                builder = NotificationCompat.Builder(this, channelId)
+            }else{
+                builder = NotificationCompat.Builder(this)
+            }
+
+            builder.run {
+                setSmallIcon(R.mipmap.ic_launcher)
+                setWhen(System.currentTimeMillis())
+                setContentTitle("키워드 알림")
+                setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
+            }
+            manager.notify(11, builder.build())
+        }
     }
 }

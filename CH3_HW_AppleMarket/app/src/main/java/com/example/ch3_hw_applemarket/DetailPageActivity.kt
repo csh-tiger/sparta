@@ -34,5 +34,8 @@ class DetailPageActivity : AppCompatActivity() {
         price.text=unitPrice
 
 
+        binding.ivDetailBackIcon.setOnClickListener { finish() }
+
+
     }
 }
